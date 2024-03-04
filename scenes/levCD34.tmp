@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dawrph5701b0a"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_5wl0o"]
+[ext_resource type="PackedScene" uid="uid://gijv5iijkx2" path="res://scenes/player_ship.tscn" id="1_c1p15"]
+[ext_resource type="Texture2D" uid="uid://b16ofhf5odq02" path="res://assets/bg.png" id="2_oeo2g"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_5wl0o")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.890076, 0.924286)
+texture = ExtResource("2_oeo2g")
+centered = false
+region_rect = Rect2(1.56, 0, 1075.15, 599.769)
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_c1p15")]
+position = Vector2(344, 412)
+
+[node name="Bullets" type="Node" parent="."]
+
+[node name="SpawnPosition" type="Marker2D" parent="."]
+position = Vector2(600, 334)

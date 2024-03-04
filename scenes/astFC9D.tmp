@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://jo7bm2nbyudp"]
+
+[ext_resource type="Script" path="res://scripts/asteroid_large.gd" id="1_3u3f6"]
+[ext_resource type="Texture2D" uid="uid://crbcg77iq643j" path="res://assets/meteor.png" id="1_p1sa2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h56xt"]
+
+[node name="AsteroidLarge" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource("1_3u3f6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_p1sa2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3, 3)
+shape = SubResource("CapsuleShape2D_h56xt")

@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=3 uid="uid://dawrph5701b0a"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_5wl0o"]
+[ext_resource type="PackedScene" uid="uid://gijv5iijkx2" path="res://scenes/player_ship.tscn" id="1_c1p15"]
+[ext_resource type="Texture2D" uid="uid://bmap4sm82dxpj" path="res://assets/bg2.png" id="2_mdld2"]
+[ext_resource type="PackedScene" uid="uid://b41wqpcjlkv33" path="res://scenes/ui.tscn" id="4_cjja3"]
+[ext_resource type="PackedScene" uid="uid://cmhmp3leqhjj3" path="res://scenes/power_up_alert.tscn" id="5_xh4t2"]
+[ext_resource type="PackedScene" uid="uid://dwuitgvo08xvj" path="res://scenes/game_over.tscn" id="6_6opfh"]
+[ext_resource type="PackedScene" uid="uid://bl48hlxu6kxm4" path="res://scenes/new_wave_alert.tscn" id="6_hnqvp"]
+[ext_resource type="PackedScene" uid="uid://cjgjiuo383olo" path="res://scenes/wave_cleared.tscn" id="8_uqcjk"]
+
+[sub_resource type="Curve2D" id="Curve2D_ureuf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 104, 69, 0, 0, 0, 0, 1064, 68, 0, 0, 0, 0, 1060, 556, 0, 0, 0, 0, 102, 553, 0, 0, 0, 0, 109, 85, 0, 0, 0, 0, 109, 82, 0, 0, 0, 0, 106, 81)
+}
+point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_6vpqy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1132, 28, 0, 0, 0, 0, 47, 33, 0, 0, 0, 0, 44, 621, 0, 0, 0, 0, 1122, 628, 0, 0, 0, 0, 1125, 43)
+}
+point_count = 5
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_5wl0o")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.890076, 0.924286)
+texture = ExtResource("2_mdld2")
+centered = false
+region_rect = Rect2(1.56, 0, 1075.15, 599.769)
+
+[node name="AsteroidSpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ureuf")
+
+[node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawnPath"]
+position = Vector2(104, 69)
+rotation = -0.00104167
+
+[node name="EnemySpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6vpqy")
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemySpawnPath"]
+position = Vector2(1132, 28)
+rotation = 3.13698
+
+[node name="Bullets" type="Node" parent="."]
+
+[node name="SpawnPosition" type="Marker2D" parent="."]
+position = Vector2(600, 334)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[node name="PowerSpawnTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[node name="UI" parent="." instance=ExtResource("4_cjja3")]
+z_index = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+
+[node name="PowerUpAlert" parent="." instance=ExtResource("5_xh4t2")]
+offset_left = 595.0
+offset_top = 323.0
+offset_right = 595.0
+offset_bottom = 323.0
+
+[node name="NewWaveAlert" parent="." instance=ExtResource("6_hnqvp")]
+offset_left = 611.0
+offset_top = 330.0
+offset_right = 611.0
+offset_bottom = 330.0
+
+[node name="GameOver" parent="." instance=ExtResource("6_6opfh")]
+offset_left = 598.0
+offset_top = 362.0
+offset_right = 598.0
+offset_bottom = 362.0
+
+[node name="WaveCleared" parent="." instance=ExtResource("8_uqcjk")]
+offset_left = 613.0
+offset_top = 339.0
+offset_right = 613.0
+offset_bottom = 339.0
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_c1p15")]
+position = Vector2(599, 340)
+rotation = -1.57079
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+[connection signal="timeout" from="PowerSpawnTimer" to="." method="_on_power_spawn_timer_timeout"]

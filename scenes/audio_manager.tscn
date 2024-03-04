@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://57vbmgxxwrvf"]
+
+[ext_resource type="Script" path="res://scripts/audio_manager.gd" id="1_8qb4y"]
+[ext_resource type="AudioStream" uid="uid://c4hl5jasm381u" path="res://assets/sounds/laser-gun-blast-short.mp3" id="2_n064t"]
+[ext_resource type="AudioStream" uid="uid://muk5t7uw3otb" path="res://assets/sounds/rocketthrustmaxx.wav" id="3_dwa1i"]
+[ext_resource type="AudioStream" uid="uid://cppu0duouy7r" path="res://assets/sounds/488294__combine2005__explosionretro.wav" id="5_jnvti"]
+[ext_resource type="AudioStream" uid="uid://b1mbossaifk5h" path="res://assets/sounds/515005__matrixxx__retro-space-explosion-or-death-sound-effect.wav" id="5_mjt8g"]
+[ext_resource type="AudioStream" uid="uid://by4p7tg0th3md" path="res://assets/sounds/beeping.mp3" id="6_ekxjs"]
+[ext_resource type="AudioStream" uid="uid://cb3v5p3x7t8cs" path="res://assets/sounds/418964__yin_yang_jake007__space-sfx-5-siren-2-short.mp3" id="7_70glv"]
+[ext_resource type="AudioStream" uid="uid://ei0l026jm17u" path="res://assets/sounds/531488__rickplayer__alarmalert.mp3" id="8_xd08s"]
+[ext_resource type="AudioStream" uid="uid://dxaeth1jha4hd" path="res://assets/sounds/255111__rhapsodize__cinematic_boom_rhapsodize.wav" id="9_03vbv"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_8qb4y")
+
+[node name="Bullet" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_n064t")
+volume_db = -3.747
+
+[node name="Thrust" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dwa1i")
+volume_db = -6.559
+
+[node name="ExplosionDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_mjt8g")
+volume_db = -14.992
+pitch_scale = 2.25
+
+[node name="ExplosionShort" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jnvti")
+volume_db = -10.306
+
+[node name="Beeping" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ekxjs")
+volume_db = 6.558
+stream_paused = true
+
+[node name="RapidFire" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_70glv")
+volume_db = -12.181
+
+[node name="Alarm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_xd08s")
+volume_db = -10.306
+stream_paused = true
+max_polyphony = 2
+
+[node name="WaveBoom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_03vbv")
+volume_db = -6.558

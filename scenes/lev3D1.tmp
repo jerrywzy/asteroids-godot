@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://dawrph5701b0a"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_5wl0o"]
+[ext_resource type="PackedScene" uid="uid://gijv5iijkx2" path="res://scenes/player_ship.tscn" id="1_c1p15"]
+[ext_resource type="Texture2D" uid="uid://b16ofhf5odq02" path="res://assets/bg.png" id="2_oeo2g"]
+[ext_resource type="PackedScene" uid="uid://b41wqpcjlkv33" path="res://scenes/ui.tscn" id="4_cjja3"]
+
+[sub_resource type="Curve2D" id="Curve2D_ureuf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 104, 69, 0, 0, 0, 0, 1064, 68, 0, 0, 0, 0, 1060, 556, 0, 0, 0, 0, 102, 553, 0, 0, 0, 0, 109, 85, 0, 0, 0, 0, 109, 82, 0, 0, 0, 0, 106, 81)
+}
+point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_6vpqy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1132, 28, 0, 0, 0, 0, 47, 33, 0, 0, 0, 0, 44, 621, 0, 0, 0, 0, 1122, 628, 0, 0, 0, 0, 1125, 43)
+}
+point_count = 5
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_5wl0o")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.890076, 0.924286)
+texture = ExtResource("2_oeo2g")
+centered = false
+region_rect = Rect2(1.56, 0, 1075.15, 599.769)
+
+[node name="AsteroidSpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ureuf")
+
+[node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawnPath"]
+position = Vector2(104, 69)
+rotation = -0.00104167
+
+[node name="EnemySpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6vpqy")
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemySpawnPath"]
+position = Vector2(1132, 28)
+rotation = 3.13698
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_c1p15")]
+position = Vector2(599, 340)
+rotation = -1.57079
+
+[node name="Bullets" type="Node" parent="."]
+
+[node name="SpawnPosition" type="Marker2D" parent="."]
+position = Vector2(600, 334)
+
+[node name="UI" parent="." instance=ExtResource("4_cjja3")]
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

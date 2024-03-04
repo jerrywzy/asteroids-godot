@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmnl2adn6x8ml"]
+
+[ext_resource type="Script" path="res://scripts/enemy_ship.gd" id="1_6y7db"]
+[ext_resource type="Texture2D" uid="uid://c1nj41lonvwl1" path="res://assets/ship_1.png" id="1_j8btu"]
+[ext_resource type="Texture2D" uid="uid://c7bjthaj158fw" path="res://assets/explosion.png" id="3_7vapa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xygrh"]
+radius = 16.0312
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_huu3k"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_unsof"]
+resource_name = "explode"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0un72"]
+_data = {
+"explode": SubResource("Animation_unsof")
+}
+
+[node name="EnemyShip" type="CharacterBody2D" groups=["hazards"]]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_6y7db")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_j8btu")
+
+[node name="Explosion" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_7vapa")
+
+[node name="BulletTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xygrh")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_huu3k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0un72")
+}
+
+[connection signal="timeout" from="BulletTimer" to="." method="_on_bullet_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

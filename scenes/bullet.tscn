@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://d35be4x6c71gn"]
+
+[ext_resource type="Texture2D" uid="uid://bhodfcuafp607" path="res://assets/flare.png" id="1_ibwsx"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_sg0n8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r02mw"]
+radius = 6.08276
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_sg0n8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_ibwsx")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_r02mw")
+
+[node name="LifeTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]

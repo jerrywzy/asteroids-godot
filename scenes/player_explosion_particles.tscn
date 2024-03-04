@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd14b3qblklbg"]
+
+[ext_resource type="Script" path="res://scripts/player_explosion_particles.gd" id="1_47yjx"]
+
+[node name="PlayerExplosionParticles" type="Node2D"]
+script = ExtResource("1_47yjx")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 250
+lifetime = 10.0
+one_shot = true
+speed_scale = 9.41
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 8.76
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+radial_accel_min = 20.0
+radial_accel_max = 50.0
+color = Color(1, 1, 0.639216, 1)
+
+[connection signal="finished" from="CPUParticles2D" to="." method="_on_cpu_particles_2d_finished"]

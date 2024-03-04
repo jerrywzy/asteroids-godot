@@ -1,0 +1,125 @@
+[gd_scene load_steps=9 format=3 uid="uid://gijv5iijkx2"]
+
+[ext_resource type="Texture2D" uid="uid://cxkioi4df2dio" path="res://assets/ship_3.png" id="1_epf34"]
+[ext_resource type="Script" path="res://scripts/player_ship.gd" id="1_eysxq"]
+[ext_resource type="Texture2D" uid="uid://dcsxuv5urrus0" path="res://assets/flaming_meteor.png" id="2_te24s"]
+[ext_resource type="Texture2D" uid="uid://c7bjthaj158fw" path="res://assets/explosion.png" id="3_7wbmk"]
+
+[sub_resource type="Animation" id="Animation_vtwp3"]
+resource_name = "exhaust"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Exhaust:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.12798, 1.03407), Vector2(2.838, 2.602)]
+}
+
+[sub_resource type="Animation" id="Animation_6ncvv"]
+resource_name = "explode"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ship:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lakat"]
+resource_name = "invuln"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.1, 0.2, 0.2001, 0.3, 0.4, 0.4001, 0.5, 0.6, 0.6001, 0.7, 0.8, 0.8001, 0.9, 1, 1.0001, 1.1, 1.2, 1.2001, 1.3, 1.4, 1.4001, 1.5, 1.6, 1.6001, 1.7, 1.8, 1.8001, 1.9, 2, 2.0001, 2.1, 2.2, 2.2001, 2.3, 2.4, 2.4001, 2.5, 2.6, 2.6001, 2.7, 2.8, 2.8001, 2.9, 3, 3.0001, 3.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.203922)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n4lco"]
+_data = {
+"exhaust": SubResource("Animation_vtwp3"),
+"explode": SubResource("Animation_6ncvv"),
+"invuln": SubResource("Animation_lakat")
+}
+
+[node name="PlayerShip" type="RigidBody2D" groups=["player"]]
+collision_layer = 0
+collision_mask = 28
+gravity_scale = 0.0
+linear_damp = 1.0
+angular_damp = 2.0
+script = ExtResource("1_eysxq")
+
+[node name="Exhaust" type="Sprite2D" parent="."]
+position = Vector2(-27, -0.999999)
+rotation = -1.57079
+scale = Vector2(1.12798, 1.03407)
+texture = ExtResource("2_te24s")
+
+[node name="Ship" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_epf34")
+
+[node name="Explosion" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_7wbmk")
+
+[node name="Hurtbox" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PackedVector2Array(-5, -25, -11, -15, -17, -13, -18, -3, -23, 3, -23, 17, 22, 17, 22, 2, 17, -3, 17, -12, 12, -13, 5, -25)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(25, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n4lco")
+}
+autoplay = "exhaust"
+
+[node name="InvulnTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 30
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+rotation = 1.5708
+polygon = PackedVector2Array(-8.00006, -16, -11, -15, -17, -13, -18, -3, -23, 3, -23, 17, 22, 17, 22, 2, 17, -3, 17, -12, 12, -13, 8.99994, -16)
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="InvulnTimer" to="." method="_on_invuln_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
